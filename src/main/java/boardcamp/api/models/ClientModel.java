@@ -1,5 +1,6 @@
 package boardcamp.api.models;
 
+import boardcamp.api.dtos.ClientDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,4 +29,10 @@ public class ClientModel {
 
     @Column(nullable = false)
     private String cpf;
+
+    public ClientModel(ClientDTO dto){
+        this.name = dto.getName();
+        this.phone = dto.getPhone();
+        this.cpf = dto.getCpf();
+    }
 }
