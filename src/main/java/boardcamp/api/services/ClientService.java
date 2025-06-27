@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import boardcamp.api.dtos.ClientDTO;
 import boardcamp.api.models.ClientModel;
-import boardcamp.api.models.GameModel;
 import boardcamp.api.repositories.ClientRepository;
 
 @Service
@@ -33,7 +32,7 @@ public class ClientService {
     }
 
     public Optional<ClientModel> postClient(ClientDTO body){
-        if(clientRepository.existsByName(body.getName())){
+        if(clientRepository.existsByCpf(body.getCpf())){
             return Optional.empty();
         }
 

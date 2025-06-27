@@ -6,11 +6,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import boardcamp.api.dtos.GameDTO;
 import boardcamp.api.models.GameModel;
 import boardcamp.api.services.GameService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/games")
@@ -35,5 +39,16 @@ public class GameController {
         }else{
             return ResponseEntity.status(HttpStatus.OK).body(game.get());
         }
+    }
+
+    @PostMapping()
+    public ResponseEntity<Object> postGame(@RequestBody @Valid GameDTO body){
+        Optional<GameModel> game = gameService.postGame(body);
+
+        if(!game.isPresent()){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(("Um jogo com esse nome já está cadastrado"));
+        }
+        
+        return ResponseEntity.status(HttpStatus.CREATED).body(game.get());
     }
 }
