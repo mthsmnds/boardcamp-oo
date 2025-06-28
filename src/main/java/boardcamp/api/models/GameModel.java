@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,10 +26,15 @@ public class GameModel {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int stockTotal;
+    @Column
+    private String image;
 
     @Column(nullable = false)
+    @Min(1)
+    private int stockTotal;
+    
+    @Column(nullable = false)
+    @Min(1)
     private int pricePerDay;
 
     public GameModel(GameDTO dto){

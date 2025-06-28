@@ -1,6 +1,6 @@
 package boardcamp.api.models;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,25 +25,36 @@ public class RentalModel {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column
-    private Date rentDate;
+    @Column(nullable = false)
+    private LocalDate rentDate;
 
-    @Column
+    @Column(nullable = false)
     private int daysRented;
 
-    @Column
-    private Date returnDate;
+    @Column(nullable = true)
+    private LocalDate returnDate;
 
-    @Column
+    @Column(nullable = false)
     private int originalPrice;
 
-    @Column
+    @Column(nullable = false)
     private int delayFee;
 
     @ManyToOne
-    @JoinColumn(name = "customerId")
+    @JoinColumn(name = "customerId", nullable = false)
     private CustomerModel customer;
 
-    @JoinColumn(name = "gameId")
+    @ManyToOne
+    @JoinColumn(name = "gameId", nullable = false)
     private GameModel game;
+
+    public RentalModel(LocalDate rentDate, int daysRented, int originalPrice, CustomerModel customer, GameModel game) {
+        this.rentDate = rentDate;
+        this.daysRented = daysRented;
+        this.returnDate = null;
+        this.originalPrice = originalPrice;
+        this.delayFee = 0;
+        this.customer = customer;
+        this.game = game;
+    }
 }

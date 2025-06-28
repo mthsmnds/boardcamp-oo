@@ -26,8 +26,8 @@ public class GameController {
     }
 
     @GetMapping()
-        public ResponseEntity<Object> getGames(){
-            return ResponseEntity.status(HttpStatus.OK).body(gameService.getGames());
+    public ResponseEntity<Object> getGames(){
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.getGames());
     }
 
     @GetMapping("/{id}")
