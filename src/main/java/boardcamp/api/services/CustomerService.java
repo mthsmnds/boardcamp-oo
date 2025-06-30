@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import boardcamp.api.dtos.CustomerDTO;
+import boardcamp.api.errors.CustomerCpfConflict;
+import boardcamp.api.errors.CustomerNotFound;
 import boardcamp.api.models.CustomerModel;
 import boardcamp.api.repositories.CustomerRepository;
 
@@ -25,20 +27,20 @@ public class CustomerService {
         Optional<CustomerModel> customer = customerRepository.findById(id);
 
         if(!customer.isPresent()){
-            return Optional.empty();
+            throw new CustomerNotFound("Usuário com esse id não encontrado");
         }else{
             return customer;
         }
     }
 
-    public Optional<CustomerModel> postCustomer(CustomerDTO body){
+    public CustomerModel postCustomer(CustomerDTO body){
         if(customerRepository.existsByCpf(body.getCpf())){
-            return Optional.empty();
+            throw new CustomerCpfConflict("Um usuário com esse cpf já está cadastrado");
         }
 
         CustomerModel customer = new CustomerModel(body);
-        customerRepository.save(customer);
-        return Optional.of(customer);
+        return customerRepository.save(customer);
+        
     }
     
 }

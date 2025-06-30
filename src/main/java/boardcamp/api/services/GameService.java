@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import boardcamp.api.dtos.GameDTO;
+import boardcamp.api.errors.GameNameConflict;
+import boardcamp.api.errors.GameNotFound;
 import boardcamp.api.models.GameModel;
 import boardcamp.api.repositories.GameRepository;
 
@@ -25,7 +27,7 @@ public class GameService {
         Optional<GameModel> game = gameRepository.findById(id);
 
         if(!game.isPresent()){
-            return Optional.empty();
+            throw new GameNotFound("Jogo com esse id não encontrado");
         }else{
             return game;
         }
@@ -33,7 +35,7 @@ public class GameService {
 
     public Optional<GameModel> postGame(GameDTO body){
         if(gameRepository.existsByName(body.getName())){
-            return Optional.empty();
+            throw new GameNameConflict("Jogo com esse nome já cadastrado");
         }
 
         GameModel game = new GameModel(body);

@@ -34,22 +34,14 @@ public class CustomerController {
     public ResponseEntity<Object> getCustomerId(@PathVariable("id") Long id){
         Optional<CustomerModel> customer = customerService.getCustomerId(id);
 
-        if(!customer.isPresent()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Jogo com esse ID não encontrado");
-        }else{
-            return ResponseEntity.status(HttpStatus.OK).body(customer.get());
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(customer);
     }
 
     @PostMapping()
     public ResponseEntity<Object> postCustomer(@RequestBody @Valid CustomerDTO body){
-        Optional<CustomerModel> customer = customerService.postCustomer(body);
+        CustomerModel customer = customerService.postCustomer(body);
 
-        if(!customer.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(("Um cliente com esse cpf já está cadastrado"));
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(customer.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body(customer);
     }
     
 }
