@@ -49,6 +49,6 @@ public class RentalController {
     @DeleteMapping("/{id}")
         public ResponseEntity<Object> deleteRental(@PathVariable Long id) {
             rentalService.deleteRental(id);
-            return ResponseEntity.ok().build();
+            return ResponseEntity.noContent().build();
     }
 }

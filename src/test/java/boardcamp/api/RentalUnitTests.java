@@ -42,12 +42,12 @@ class RentalUnitTests {
     @Test
     void givenNonexistentCustomer_whenCreatingRental_thenThrowsError() {
         //given
-        RentalDTO dto = new RentalDTO(1L, 1L, 3);
+        RentalDTO rental = new RentalDTO(1L, 1L, 3);
         doReturn(Optional.empty()).when(customerRepository).findById(1L);
 
         //when 
         CustomerNotFound error = assertThrows(CustomerNotFound.class,
-         () -> rentalService.postRental(dto));
+        () -> rentalService.postRental(rental));
 
         //then
         verify(customerRepository, times(1)).findById(any());
@@ -61,7 +61,7 @@ class RentalUnitTests {
     @Test
     void givenOutOfStockGame_whenCreatingRental_thenThrowsError() {
         //given
-        RentalDTO dto = new RentalDTO(1L, 1L, 3);
+        RentalDTO rental = new RentalDTO(1L, 1L, 3);
         CustomerModel customer = new CustomerModel();
         customer.setId(1L);
         GameModel game = new GameModel();
@@ -75,7 +75,7 @@ class RentalUnitTests {
 
         //when
         GameNotAvaiable error = assertThrows(GameNotAvaiable.class,
-         () -> rentalService.postRental(dto));
+        () -> rentalService.postRental(rental));
 
         //then
         verify(customerRepository, times(1)).findById(any());
@@ -90,7 +90,7 @@ class RentalUnitTests {
     @Test
     void givenInvalidGameId_whenCreatingRental_thenThrowsError() {
         //given
-        RentalDTO dto = new RentalDTO(1L, 1L, 3);
+        RentalDTO rental = new RentalDTO(1L, 1L, 3);
         CustomerModel customer = new CustomerModel();
         customer.setId(1L);
 
@@ -99,7 +99,7 @@ class RentalUnitTests {
 
         // when
         GameNotFound error = assertThrows(GameNotFound.class, 
-        () -> rentalService.postRental(dto));
+        () -> rentalService.postRental(rental));
 
         //then
         verify(customerRepository, times(1)).findById(any());
@@ -113,13 +113,13 @@ class RentalUnitTests {
     @Test
     void givenValidRental_whenCreatingRental_thenCreatesRental() {
         //given
-        RentalDTO dto = new RentalDTO(1L, 1L, 3);
+        RentalDTO rental = new RentalDTO(1L, 1L, 3);
         CustomerModel customer = new CustomerModel();
         GameModel game = new GameModel();
         game.setPricePerDay(1500);
         game.setStockTotal(5);
 
-        RentalModel rental = new RentalModel(LocalDate.now(), 3, 4500, customer, game);
+        RentalModel newRental = new RentalModel(LocalDate.now(), 3, 4500, customer, game);
 
         doReturn(Optional.of(customer)).when(customerRepository).findById(1L);
         doReturn(Optional.of(game)).when(gameRepository).findById(1L);
@@ -127,13 +127,13 @@ class RentalUnitTests {
         doReturn(rental).when(rentalRepository).save(any());
 
         //when
-        RentalModel result = rentalService.postRental(dto);
+        RentalModel result = rentalService.postRental(rental);
 
         //then
         verify(customerRepository, times(1)).findById(1L);
         verify(gameRepository, times(1)).findById(1L);
         verify(rentalRepository, times(1)).activeRentals(1L);
         verify(rentalRepository, times(1)).save(any());
-        assertEquals(rental, result);
+        assertEquals(newRental, result);
     }
 }

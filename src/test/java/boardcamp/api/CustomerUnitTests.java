@@ -39,7 +39,7 @@ class CustomerUnitTests {
 
 		// when
 		CustomerCpfConflict error = assertThrows(CustomerCpfConflict.class,
-				() -> customerService.postCustomer(customer));
+		() -> customerService.postCustomer(customer));
 
 		// then
 		verify(customerRepository, times(1)).existsByCpf(any());
@@ -56,7 +56,7 @@ class CustomerUnitTests {
 
 		// when
 		CustomerNotFound error = assertThrows(CustomerNotFound.class,
-				() -> customerService.getCustomerId(any()));
+		() -> customerService.getCustomerId(any()));
 
 		// then
 		verify(customerRepository, times(1)).findById(any());

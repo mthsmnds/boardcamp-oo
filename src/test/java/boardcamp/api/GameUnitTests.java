@@ -40,7 +40,7 @@ class GameUnitTests {
 
 		//when
 		GameNameConflict error = assertThrows(GameNameConflict.class,
-		 ()-> gameService.postGame(game));
+		()-> gameService.postGame(game));
 
 		//then
 		verify(gameRepository, times(1)).existsByName(any());
@@ -57,7 +57,7 @@ class GameUnitTests {
 
 		//when
 		GameNotFound error = assertThrows(GameNotFound.class,
-		 ()-> gameService.getGameId(any()));
+		()-> gameService.getGameId(any()));
 
 		//then
 		verify(gameRepository, times(1)).findById(any());
