@@ -43,12 +43,8 @@ public class GameController {
 
     @PostMapping()
     public ResponseEntity<Object> postGame(@RequestBody @Valid GameDTO body){
-        Optional<GameModel> game = gameService.postGame(body);
-
-        if(!game.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body(("Um jogo com esse nome já está cadastrado"));
-        }
+        GameModel game = gameService.postGame(body);
         
-        return ResponseEntity.status(HttpStatus.CREATED).body(game.get());
+        return ResponseEntity.status(HttpStatus.CREATED).body(game);
     }
 }

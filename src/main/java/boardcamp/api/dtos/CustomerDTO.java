@@ -2,9 +2,11 @@ package boardcamp.api.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class CustomerDTO {
     @NotBlank
     private String name;

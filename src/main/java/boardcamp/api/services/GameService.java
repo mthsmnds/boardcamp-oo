@@ -33,13 +33,13 @@ public class GameService {
         }
     }
 
-    public Optional<GameModel> postGame(GameDTO body){
+    public GameModel postGame(GameDTO body){
         if(gameRepository.existsByName(body.getName())){
             throw new GameNameConflict("Jogo com esse nome já cadastrado");
         }
 
         GameModel game = new GameModel(body);
-        gameRepository.save(game);
-        return Optional.of(game);
+        return gameRepository.save(game);
+        
     }
 }

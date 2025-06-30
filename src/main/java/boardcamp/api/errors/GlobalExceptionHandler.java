@@ -41,4 +41,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleRentalNotFound(RentalNotFound error){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error.getMessage());
     }
+
+    @ExceptionHandler({RentalNotFinished.class})
+    public ResponseEntity<String> handleRentalNotFinished(RentalNotFinished error){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error.getMessage());
+    }
 }

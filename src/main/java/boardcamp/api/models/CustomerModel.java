@@ -7,8 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +26,7 @@ public class CustomerModel {
     private String name;
 
     @Column(nullable = false)
-    @Min(value = 10)
-    @Max(value = 11)
+    @Size(min = 10, max = 11)
     private String phone;
 
     @Column(nullable = false)
